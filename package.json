@@ -1,0 +1,38 @@
+{
+  "name": "fifa-championship",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "@radix-ui/themes": "^3.1.3",
+    "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-query-devtools": "^5.51.23",
+    "@types/lodash": "^4.17.7",
+    "@types/uuid": "^10.0.0",
+    "axios": "^1.7.3",
+    "lodash": "^4.17.21",
+    "next": "14.2.5",
+    "prisma": "^5.18.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "uuid": "^10.0.0",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

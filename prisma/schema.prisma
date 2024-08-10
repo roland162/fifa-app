@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Match {
+  id             String       @id @default(cuid())
+  championshipId String
+  player1        Player       @relation("Player1Matches", fields: [player1Id], references: [id])
+  player1Id      String
+  player2        Player       @relation("Player2Matches", fields: [player2Id], references: [id])
+  player2Id      String
+  winnerId       String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  matchTier      String       @default("base")
+  player1Team    String
+  player2Team    String
+  isFinished     Boolean      @default(false)
+  championship   Championship @relation(fields: [championshipId], references: [id])
+}
+
+model Championship {
+  id                       String   @id @default(cuid())
+  name                     String
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  players                  Player[] @relation("ChampionshipPlayers")
+  playOffMatchIds          String[] @default([])
+  finalMatchId             String?
+  groupStageMatchIds       String[] @default([])
+  numberOfMatchesPerPlayer Int?     @default(0)
+  maxMatches               Int?
+  matches                  Match[]
+}
+
+model StandaloneMatch {
+  id          String   @id @default(cuid())
+  player1     Player   @relation("Player1StandaloneHome", fields: [player1Id], references: [id])
+  player1Id   String
+  player2     Player   @relation("Player1StandaloneAway", fields: [player2Id], references: [id])
+  player2Id   String
+  winnerId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  player1Team String
+  player2Team String
+  isFinished  Boolean  @default(false)
+}
+
+model Player {
+  id                    String            @id @default(cuid())
+  name                  String
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  wins                  Int               @default(0)
+  goalsScored           Int               @default(0)
+  totalGamesPlayed      Int               @default(0)
+  pastMatchIds          String[]          @default([])
+  matches1              Match[]           @relation("Player1Matches")
+  matches2              Match[]           @relation("Player2Matches")
+  wonMatchIds           String[]          @default([])
+  championshipIds       Championship[]    @relation("ChampionshipPlayers")
+  standaloneMatchesHome StandaloneMatch[] @relation("Player1StandaloneHome")
+  standaloneMatchesAway StandaloneMatch[] @relation("Player1StandaloneAway")
+}

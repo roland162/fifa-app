@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Match" ADD COLUMN     "player1Goals" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "player2Goals" INTEGER NOT NULL DEFAULT 0;
